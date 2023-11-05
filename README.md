@@ -96,67 +96,65 @@ SIM800_Handle_t sim800h = {0};
 
 int main(void)
 {
-    	SIM800_Battery_t battery = {0};
-    	char tx_buff[100];
-
-    	//Start receiving data from module
-    	if( SIM800_ManageReceiving(&sim800h, ENABLE) != SIM800_OK )
-    	{
-		Error_Handler();
-	}
-
-	//Wait for sim800 registration in network. Do a little break while iterating.
-  	while( SIM800_GetNetworkRegStatus(&sim800h) != SIM800_Registered_HomeNetwork &&
-  		   SIM800_GetNetworkRegStatus(&sim800h) != SIM800_Registered_Roaming)
-	{
-  		HAL_Delay(500);
-	}
-
-	//Delete all exists SMS messages to free memory
-	if( SIM800_DeleteAllSMSMessages(&sim800h) != SIM800_OK )
-	{
-		Error_Handler();
-	}
-
-	//Set SMS text mode
-	if( SIM800_SetSMSTextMode(&sim800h) != SIM800_OK )
-	{
-		Error_Handler();
-	}
-
-	//Enable SMS notifications callback
-	if( SIM800_ManageSMSNotifications(&sim800h, ENABLE) != SIM800_OK )
-	{
-		Error_Handler();
-	}
-
-	//Send initial SMS message
-	if( SIM800_SendSMSMessage(&sim800h, PHONE_NUMBER, "Ready!") != SIM800_OK )
-	{
-		Error_Handler();
-	}
-  while (1)
-  {
- 
-
-	  //Check if MCU received new message
-	  if(flag)
-	  {
-		  //If received message text is "Batt" receive information about battery and send it.
-		  if( !strcmp(sms_buff, "Batt") )
-		  {
-			  SIM800_GetBatteryInfo(&sim800h, &battery);
-
-			  sprintf(tx_buff, "Battery level: %d\r\nConnection level: %d", battery.battery_level, battery.conection_level);
-
-			  SIM800_SendSMSMessage(&sim800h, PHONE_NUMBER, tx_buff);
-		  } else
-		  {
-			  SIM800_SendSMSMessage(&sim800h, PHONE_NUMBER, "Unknown command!!!");
-		  }
-		  flag = 0;
-	  }
-  }
+    SIM800_Battery_t battery = {0};
+    char tx_buff[100];
+    
+    //Start receiving data from module
+    if( SIM800_ManageReceiving(&sim800h, ENABLE) != SIM800_OK )
+    {
+    Error_Handler();
+    }
+    
+    //Wait for sim800 registration in network. Do a little break while iterating.
+    while( SIM800_GetNetworkRegStatus(&sim800h) != SIM800_Registered_HomeNetwork &&
+           SIM800_GetNetworkRegStatus(&sim800h) != SIM800_Registered_Roaming)
+    {
+        HAL_Delay(500);
+    }
+    
+    //Delete all exists SMS messages to free memory
+    if( SIM800_DeleteAllSMSMessages(&sim800h) != SIM800_OK )
+    {
+        Error_Handler();
+    }
+    
+    //Set SMS text mode
+    if( SIM800_SetSMSTextMode(&sim800h) != SIM800_OK )
+    {
+        Error_Handler();
+    }
+    
+    //Enable SMS notifications callback
+    if( SIM800_ManageSMSNotifications(&sim800h, ENABLE) != SIM800_OK )
+    {
+        Error_Handler();
+    }
+    
+    //Send initial SMS message
+    if( SIM800_SendSMSMessage(&sim800h, PHONE_NUMBER, "Ready!") != SIM800_OK )
+    {
+        Error_Handler();
+    }
+    while (1)
+    {
+      //Check if MCU received new message
+      if(flag)
+      {
+          //If received message text is "Batt" receive information about battery and send it.
+          if( !strcmp(sms_buff, "Batt") )
+          {
+              SIM800_GetBatteryInfo(&sim800h, &battery);
+    
+              sprintf(tx_buff, "Battery level: %d\r\nConnection level: %d", battery.battery_level, battery.conection_level);
+    
+              SIM800_SendSMSMessage(&sim800h, PHONE_NUMBER, tx_buff);
+          } else
+          {
+              SIM800_SendSMSMessage(&sim800h, PHONE_NUMBER, "Unknown command!!!");
+          }
+          flag = 0;
+      }
+    }
 }
 
 
