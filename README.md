@@ -1,4 +1,4 @@
-# SIM800 HAL based library for simly SMS applications
+# SIM800 HAL based library for simply SMS applications
 
 The SIM800 Library is a C library for interfacing with SIM800 GSM/GPRS modules. It provides easy-to-use functions for managing various features of the SIM800 module, 
 including sending and receiving SMS messages, retrieving battery information, checking network registration status, and more.
