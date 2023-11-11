@@ -56,7 +56,7 @@ To use the SIM800 Library in your project, follow these steps:
   ```
 * Delete all exists SMS messages to free memory(If the memory is full, notifications about new SMS messages will not come.).
   ```
-  SIM800_ManageReceiving(&sim800h, ENABLE);
+  SIM800_DeleteAllSMSMessages(&sim800h);
   ```
 * Set SMS text mode.
   ```
@@ -66,7 +66,7 @@ To use the SIM800 Library in your project, follow these steps:
   ```
   SIM800_ManageSMSNotifications(&sim800h, ENABLE);
   ```
-* Now you transmit SMS messages:
+* Now you able to send SMS messages:
   ```
   SIM800_SendSMSMessage(&sim800h, PHONE_NUMBER, MESSAGE);
   ```
@@ -84,7 +84,7 @@ To use the SIM800 Library in your project, follow these steps:
   ```
 ## Simple example:
   ```
-  #include <string.h>
+#include <string.h>
 #include <stdio.h>
 #include "sim800.h"
 
