@@ -133,7 +133,7 @@ typedef struct
 typedef struct
 {
     char sender[SMS_SENDER_MAX_LEN];
-    char text[SMS_SENDER_MAX_LEN];
+    char text[SMS_TEXT_MAX_LEN];
 } SIM800_SMSMessage_t;
 
 
