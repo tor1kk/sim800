@@ -793,7 +793,7 @@ static void cmgr_parser(SIM800_SMSMessage_t *sms_message, char *message)
 
     len = ptr2 - ptr1;
 
-    strncpy(sms_message->sender, ptr1, len);
+    strncpy(sms_message->sender, ptr1, len+1);
 
     ptr1 = strchr(message, '\n');
     ptr1++;
